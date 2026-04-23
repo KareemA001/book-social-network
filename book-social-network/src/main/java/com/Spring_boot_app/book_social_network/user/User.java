@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.jspecify.annotations.Nullable;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -96,7 +98,7 @@ public class User implements UserDetails, Principal {
         return enabled;
     }
 
-    private String getFullName() {
+    public String getFullName() {
         return firstName+ " " +lastName;
     }
 }
