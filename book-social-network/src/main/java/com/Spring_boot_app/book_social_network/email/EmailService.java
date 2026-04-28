@@ -13,6 +13,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE_MIXED;
+
 @Service
 @RequiredArgsConstructor
 public class EmailService {
@@ -36,8 +39,8 @@ public class EmailService {
         );
         Map<String, Object> properties = new HashMap<>();
         properties.put("username",username);
-        properties.put("confirmationURL",confirmationURL);
-        properties.put("activation_Code",activationCode);
+        properties.put("confirmationUrl",confirmationURL);
+        properties.put("activation_code",activationCode);
 
         Context context = new Context();
         context.setVariables(properties);

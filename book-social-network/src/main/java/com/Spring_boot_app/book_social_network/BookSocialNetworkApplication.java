@@ -13,5 +13,4 @@ public class BookSocialNetworkApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BookSocialNetworkApplication.class, args);
 	}
-
 }

@@ -3,12 +3,9 @@ package com.Spring_boot_app.book_social_network.role;
 import com.Spring_boot_app.book_social_network.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -16,6 +13,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -36,7 +34,7 @@ public class Role {
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime creationDate;
-    @LastModifiedBy
+    @LastModifiedDate
     @Column(nullable = true,insertable = false)
     private LocalDateTime lastModificationTime;
 

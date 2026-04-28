@@ -1,25 +1,20 @@
 package com.Spring_boot_app.book_social_network.authentication;
 
-
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import java.time.LocalDate;
+import org.springframework.stereotype.Service;
 
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-public class RegistrationRequest {
+@AllArgsConstructor
+public class AuthenticationRequest {
 
-    @NotEmpty(message = "The first name is mandatory")
-    @NotBlank(message = "The first name is mandatory")
-    private String firstName;
-    @NotEmpty(message = "The last name is mandatory")
-    @NotBlank(message = "The last name is mandatory")
-    private String lastName;
     @NotEmpty(message = "The email is mandatory")
     @NotBlank(message = "The email is mandatory")
     @Email(message = "Email is not formatted")
