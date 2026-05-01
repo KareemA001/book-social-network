@@ -1,5 +1,7 @@
 package com.Spring_boot_app.book_social_network.user;
 
+import com.Spring_boot_app.book_social_network.book.Book;
+import com.Spring_boot_app.book_social_network.history.BookTransactionHistory;
 import com.Spring_boot_app.book_social_network.role.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -50,6 +52,13 @@ public class User implements UserDetails, Principal {
 //            inverseJoinColumns = @JoinColumn(name = "role_id")
 //    )
     private List<Role> roles;
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL )
+    private List<Book> books;
+
+    @OneToMany(mappedBy = "user")
+    private List<BookTransactionHistory> transactionHistories;
+
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
