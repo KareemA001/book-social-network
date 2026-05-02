@@ -1,6 +1,7 @@
 package com.Spring_boot_app.book_social_network.handler;
 
 
+import com.Spring_boot_app.book_social_network.exception.OperationNotPermittedException;
 import jakarta.mail.MessagingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static com.Spring_boot_app.book_social_network.handler.BusinessErrorCodes.*;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @RestControllerAdvice
@@ -95,6 +97,17 @@ public class GlobalExceptionHandler {
                 .body(
                         ExceptionResponse.builder()
                                 .businessErrorMessage("Internal error")
+                                .error(exp.getMessage())
+                                .build()
+                );
+    }
+
+    @ExceptionHandler(OperationNotPermittedException.class)
+    public ResponseEntity<ExceptionResponse> ExceptionHandler(OperationNotPermittedException exp) {
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body(
+                        ExceptionResponse.builder()
                                 .error(exp.getMessage())
                                 .build()
                 );
