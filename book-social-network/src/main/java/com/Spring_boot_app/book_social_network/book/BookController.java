@@ -1,6 +1,7 @@
 package com.Spring_boot_app.book_social_network.book;
 
 import com.Spring_boot_app.book_social_network.commenfeatures.PageResponse;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping(path = "books")
@@ -97,5 +99,12 @@ public class BookController {
             @PathVariable(value = "book-id") int bookId,
             Authentication connectedUser) {
         return ResponseEntity.ok(bookService.approveReturnBorrowedBook(bookId, connectedUser));
+    }
+
+    @PostMapping(path = "/cover/{book-id}", consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadBookCoverPicture(@PathVariable(value = "book-id") int bookId, Authentication connectedUser,
+                                                    @RequestPart("file")MultipartFile file) {
+        bookService.uploadBookCoverPicture(file, connectedUser, bookId);
+        return ResponseEntity.accepted().build();
     }
 }

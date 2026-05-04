@@ -2,6 +2,7 @@ package com.Spring_boot_app.book_social_network.book;
 
 import com.Spring_boot_app.book_social_network.commenfeatures.PageResponse;
 import com.Spring_boot_app.book_social_network.exception.OperationNotPermittedException;
+import com.Spring_boot_app.book_social_network.file.FileStorageService;
 import com.Spring_boot_app.book_social_network.history.BookTransactionHistory;
 import com.Spring_boot_app.book_social_network.history.BookTransactionHistoryRepository;
 import com.Spring_boot_app.book_social_network.user.User;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,6 +28,7 @@ public class BookService {
     private final BookMapper bookMapper;
     private final BookRepository bookRepository;
     private final BookTransactionHistoryRepository bookTransactionHistoryRepository;
+    private final FileStorageService fileStorageService;
     public Integer save(BookRequest bookRequest, Authentication connectedUser) {
 
         User user = (User) connectedUser.getPrincipal();
@@ -193,5 +196,14 @@ public class BookService {
                 .orElseThrow(() -> new OperationNotPermittedException("The book is not approved yet"));
         transactionHistory.setReturnApproved(true);
         return bookTransactionHistoryRepository.save(transactionHistory).getId();
+    }
+
+    public void uploadBookCoverPicture(MultipartFile file, Authentication connectedUser, int bookId) {
+        Book requiredBook = bookRepository.findById(bookId)
+                        .orElseThrow(() -> new EntityNotFoundException("The required book is not existed"));
+        User user = (User) connectedUser.getPrincipal();
+        var bookCover = fileStorageService.saveFile(file, user.getId());
+        requiredBook.setBookCover(bookCover);
+        bookRepository.save(requiredBook);
     }
 }
